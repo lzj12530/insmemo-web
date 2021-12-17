@@ -95,10 +95,13 @@ const MemoList: React.FC<Props> = () => {
   }, []);
 
   const exportMemos = () => {
-    console.log(shownMemos)
     const data = shownMemos.map(memo => {
-      const {date, requirements, content } = parseDaily(memo.content)
-      return  [date, requirements, content ]
+      const {date, requirements, content, product } = parseDaily(memo.content)
+      return  [date, product, requirements + ':' + content ]
+    })
+    data.sort((a, b ) => {
+      if (a > b) return 1
+      return -1
     })
     exportFile(data)
   }

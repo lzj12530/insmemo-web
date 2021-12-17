@@ -17,6 +17,7 @@ export const exportFile = (data: Array<any>, filename = '') => {
 };
 export function parseDaily(content: string) {
     const result = {
+        product: '',
         requirements: '',
         type: '',
         date: '',
@@ -28,6 +29,7 @@ export function parseDaily(content: string) {
     let lastreg = new RegExp(TAG_REG).exec(content)
     if (lastreg && lastreg.length > 0) {
         tags = lastreg[1].split('/')
+        result.product = tags[tags.length - 3]
         result.requirements = tags[tags.length - 2]
         result.type = tags[tags.length - 1]
     }
