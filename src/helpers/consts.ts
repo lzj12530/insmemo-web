@@ -21,3 +21,5 @@ export const IMAGE_URL_REG = /(https?:\/\/[^\s<\\*>']+\.(jpeg|jpg|gif|png|svg))/
 
 // memo 关联正则
 export const MEMO_LINK_REG = /\[@(.+?)\]\((.+?)\)/g;
+
+export const DATE_REG = /\d{4}-\d{2}-\d{2}/g

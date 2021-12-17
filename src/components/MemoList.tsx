@@ -4,6 +4,7 @@ import { locationService, memoService, queryService } from "../services";
 import { IMAGE_URL_REG, LINK_REG, MEMO_LINK_REG, TAG_REG } from "../helpers/consts";
 import utils from "../helpers/utils";
 import { checkShouldShowMemoWithFilters } from "../helpers/filter";
+import { exportFile, parseDaily } from '../helpers/export'
 import Memo from "./Memo";
 import toastHelper from "./Toast";
 import MemoEditor from "./MemoEditor";
@@ -93,8 +94,20 @@ const MemoList: React.FC<Props> = () => {
     }
   }, []);
 
+  const exportMemos = () => {
+    console.log(shownMemos)
+    const data = shownMemos.map(memo => {
+      const {date, requirements, content } = parseDaily(memo.content)
+      return  [date, requirements, content ]
+    })
+    exportFile(data)
+  }
   return (
     <div className={`memolist-wrapper ${isFetching ? "" : "completed"}`} onClick={handleMemoListClick} ref={wrapperElement}>
+      <div className="tools-bar">
+        <div>当前条数: {shownMemos.length} 条</div>
+        <div onClick={exportMemos}>导出</div>
+      </div>
       {shownMemos.map((memo) =>
         globalState.editMemoId === memo.id ? (
           <MemoEditor key={memo.id} className="memo-edit" editMemoId={memo.id} />
