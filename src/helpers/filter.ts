@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import { IMAGE_URL_REG, LINK_REG, MEMO_LINK_REG, TAG_REG } from "./consts";
 
 export const relationConsts = [
@@ -66,6 +67,26 @@ export const filterConsts = {
       },
     ],
   },
+  DATE: {
+    value: "DATE",
+    text: "日期",
+    operators: [
+      {
+        value: "CONTAIN",
+        text: "包含",
+      },
+    ],
+    values: [
+      {
+        value: "THIS_WEEK",
+        text: "本周",
+      },
+      {
+        value: "THIS_MONTH",
+        text: "本月",
+      }
+    ]
+  }
 };
 
 export const memoSpecialTypes = filterConsts["TYPE"].values;
@@ -145,6 +166,19 @@ export const checkShouldShowMemo = (memo: Model.Memo, filter: Filter) => {
       contained = !contained;
     }
     shouldShow = contained;
+  } else if (type === "DATE") {
+    let mark: any
+    switch(value) {
+      case 'THIS_WEEK':
+        mark = 'week';
+        break;
+      case 'THIS_MONTH':
+        mark = 'month';
+        break;
+      default:
+    }
+    shouldShow = moment(memo.createdAt).isSame(new Date(), mark)
+    console.log(memo, value, operator)
   }
 
   return shouldShow;

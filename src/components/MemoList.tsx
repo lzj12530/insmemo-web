@@ -30,6 +30,7 @@ const MemoList: React.FC<Props> = () => {
           let shouldShow = true;
 
           const query = queryService.getQueryById(queryId);
+          console.log(query)
           if (query) {
             const filters = JSON.parse(query.querystring) as Filter[];
             if (Array.isArray(filters)) {
@@ -103,7 +104,8 @@ const MemoList: React.FC<Props> = () => {
       if (a > b) return 1
       return -1
     })
-    exportFile(data)
+    const header = ['日期','项目','内容']
+    exportFile([header,...data])
   }
   return (
     <div className={`memolist-wrapper ${isFetching ? "" : "completed"}`} onClick={handleMemoListClick} ref={wrapperElement}>

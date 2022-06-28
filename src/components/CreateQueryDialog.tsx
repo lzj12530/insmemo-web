@@ -204,6 +204,17 @@ const MemoFilterInputer: React.FC<MemoFilterInputerProps> = memo((props: MemoFil
         );
         break;
       }
+      case "DATE": {
+        valueElement = (
+          <Selector
+            className="value-selector"
+            dataSource={filterConsts["DATE"].values}
+            value={filter.value.value}
+            handleValueChanged={handleValueChange}
+          />
+        );
+        break;
+      }
     }
 
     setInputElements(

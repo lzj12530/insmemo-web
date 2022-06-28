@@ -3,8 +3,17 @@ import XLSX from 'xlsx';
 
 const CODE_BLOCK_REG = /```([\s\S]*?)```/g;
 const CONTENT_REG = /(?<=---\n)([\s\S]*)/g
-
-export const exportFile = (data: Array<any>, filename = '') => {
+interface COL {
+    name: string
+    key: string
+}
+type AOA_DATA = Array<string[]>
+interface SHEET_DATA {
+    cols: COL[]
+    data: AOA_DATA
+}
+type EXPORT_DATA = AOA_DATA | SHEET_DATA
+export const exportFile = (data: AOA_DATA, filename = '') => {
     if (filename === '') {
         filename = `${new Date().getTime()}_sheetjs.xlsx`
     }
